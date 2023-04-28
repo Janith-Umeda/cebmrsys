@@ -4,14 +4,29 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
 function EntryField(){
+
+    const [isValidAcc,setValidAcc] = useState(true);
+
     return(
         <Card bg="light" className="mt-4">
             <Card.Body className="row">
-                <div className="col-6 bg-danger" >
-                    input
+                <div className="col-6" >
+                    <input 
+                        type="number" 
+                        className={`form-control  ${!isValidAcc && 'anum_not_valid' }` }
+                        placeholder="Account Number" 
+                    />
+                    <div hidden={isValidAcc ? true : false } className="form-text text-danger">Wrong Account Number</div>
                 </div>
-                <div className="col-3 bg-warning" >sd</div>
-                <div className="col-3 bg-success">se</div>
+                <div className="col-3" >
+                    <input 
+                        type="date" 
+                        className="form-control"
+                    />
+                </div>
+                <div className="col-3">
+                    <input type="number" className="form-control" />
+                </div>
             </Card.Body>
         </Card>
     )

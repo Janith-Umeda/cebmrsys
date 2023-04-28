@@ -1,9 +1,21 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
+import NavBar from '@/components/navbar'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const [isLbtnClick,setLbtnClick] = useState(false);
+
+  useEffect(()=>{
+    if(isLbtnClick){
+      window.location.replace('/login');
+    }
+    return ()=>{setLbtnClick(false)}
+  })
+
   return (
     <>
       <Head>
@@ -13,7 +25,7 @@ export default function Home() {
         <link rel="icon" href="/ceb.png" />
       </Head>
       <main>
-        
+        <NavBar logoutTrigger={()=>setLbtnClick(true)}/>
       </main>
     </>
   )

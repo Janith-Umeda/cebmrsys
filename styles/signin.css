@@ -24,3 +24,8 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.anum_not_valid{
+    background: rgba(255, 0, 0, 0.248);
+    border: 1px solid red;
+}
