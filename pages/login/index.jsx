@@ -35,6 +35,7 @@ function LPage(){
     const [isClick,setClick] = useState(false);
     const [isLoading,setLoading] = useState(false);
     const [data,setData] = useState();
+    const [showAlert,setAlert] = useState(false);
 
     useEffect(()=>{
 
@@ -48,6 +49,7 @@ function LPage(){
                 response.json().then(data=>{
                     setLoading(false);
                     setData(data);
+                    setAlert(true);
                     if(data?.userID && data?.status){
                         // const cookie = new ReadyCookies();
                         // cookie.setSession("userID",data.userID);
@@ -57,11 +59,16 @@ function LPage(){
                 })
             }).catch((err)=>{
                 setLoading(false);
+                setAlert(true);
                 setData({status:false,msg:'Something Went Wrong!'});
             })
         }
+
         return ()=>setClick(false);
-    },[isClick, email, psw])
+
+    },[isClick, email, psw, showAlert])
+
+
 
     return(
         <>
@@ -105,11 +112,12 @@ function LPage(){
                 </Form>
             </div>
         </main>
-        { data ? (
-            <AlertToast 
-                type={data?.status ? ('success') : ('error')} 
-                msg={data?.msg} 
-            />) : (null) }
+        <AlertToast 
+            showAlert={showAlert}
+            setShow={setAlert}
+            type={data?.status ? ('success') : ('error')} 
+            msg={data?.msg} 
+        />
         </>
     );
 }

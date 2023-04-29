@@ -1,10 +1,18 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 
-export default function AlertToast({type,msg}){
+export default function AlertToast({showAlert,setShow,type,msg}){
 
-    const [show,setShow] = useState(true);
+    useEffect(()=>{
+        if(showAlert){
+            const d = setInterval(()=>{
+                setShow(false);
+                clearInterval(d);
+            },5000)
+        }
+    })
+
     let alertType = '';
 
     switch(type){
@@ -20,7 +28,7 @@ export default function AlertToast({type,msg}){
 
     return(
         <ToastContainer position="top-end" className="p-3 mt-5">
-            <Toast show={show} onClose={()=>setShow(!show)} bg={alertType}>
+            <Toast show={showAlert} onClose={()=>setShow(!showAlert)} bg={alertType}>
                 <Toast.Header>
                     <Image 
                         src="/ceb.png" 
@@ -32,7 +40,7 @@ export default function AlertToast({type,msg}){
                     <strong className="me-auto">Alert</strong>
                     <small></small>
                 </Toast.Header>
-                <Toast.Body>{msg}</Toast.Body>
+                <Toast.Body><span className="text-white">{msg}</span></Toast.Body>
             </Toast>
         </ToastContainer>
     );

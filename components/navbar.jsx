@@ -3,9 +3,9 @@ import Image from "next/image";
 
 export default function NavBar({logoutTrigger,userName}){
     return(
-        <Navbar bg="light" variant="light">
+        <Navbar bg="light" variant="light" className="shadow">
             <Container>
-                <Navbar.Brand>
+                <Navbar.Brand href="/">
                     <Image
                         alt="brandLogo"
                         src="/ceb.png"

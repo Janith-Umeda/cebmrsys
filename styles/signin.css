@@ -32,3 +32,56 @@
     background: rgba(255, 0, 0, 0.248);
     border: 1px solid red;
 }
+
+.billcard-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid yellow;
+}
+
+.billcard-date{
+    background: #adff2f;
+    padding: 5px;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+
+.billcard-name{
+    padding: 5px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.billcard-total{
+    background: #00ff951e;
+}
+
+.billcard-footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.billcard-footer-accno{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid #0d6efd;
+    border-radius: 10px;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+.billcard-footer-accno:hover{
+    background: #0d6efd;
+    color: white;
+}
+
+.billcard-footer-accno>span{
+    padding-left: 5px;
+}
+
+.r-select{
+    background: rgba(238, 130, 238, 0.43);
+}
