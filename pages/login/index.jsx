@@ -1,4 +1,5 @@
 import HeadwTitle from "@/components/head";
+import NavBar from "@/components/navbar";
 import AlertToast from "@/components/toast";
 import { URLSearchParams } from "next/dist/compiled/@edge-runtime/primitives/url";
 import Image from "next/image";
@@ -65,17 +66,20 @@ function LPage(){
     return(
         <>
         <main>
-            <div className="form-signin shadow position-absolute top-50 start-50 translate-middle">
+            <NavBar />
+            <div className="form-signin w-100 shadow position-absolute top-50 start-50 translate-middle">
                 <Form validated>
-                    <Image
-                        className="img-fluid mb-3 sgnimg"
-                        width={50}
-                        height={50}
-                        src="/ceb.png"
-                        alt="cebLogo"
-                        
-                    />
-                    <h2 className="h3 text-center mb-3 fw-normal">Please Sign in</h2>
+                    <div className="login-sec-top">
+                        <Image
+                            className="img-fluid mb-3"
+                            width={50}
+                            height={50}
+                            src="/ceb.png"
+                            alt="cebLogo"
+                            
+                        />
+                        <h2 className="h3 mb-3 fw-normal">Please Sign in</h2>
+                    </div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control 

@@ -62,10 +62,12 @@ function RBoard(){
 
 
     return (
+        <>
+        <NavBar logoutTrigger={()=>setLogout(true)} userName={userData?.data.username} />
         <main className="container">
-            <NavBar logoutTrigger={()=>setLogout(true)} userName={userData?.data.username} />
             <EntryField />
         </main>
+        </>
     )
 }
 

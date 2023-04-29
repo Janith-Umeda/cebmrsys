@@ -5,8 +5,11 @@
     border-radius: 5px;
 }
 
-.sgnimg{
-    margin-left: 80px;
+.login-sec-top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .form-signin .form-floating:focus-within {
