@@ -12,5 +12,5 @@ example :=   env:{
 Create a DataBase called cebmr_sys and import the sql File
 
 ## API End Points
-* route : */auth 
-** For Authentication
+* route : */auth \n
+* For Authentication
