@@ -83,7 +83,7 @@ function LPage(){
                             height={50}
                             src="/ceb.png"
                             alt="cebLogo"
-                            
+                            unoptimized={true}
                         />
                         <h2 className="h3 mb-3 fw-normal">Please Sign in</h2>
                     </div>

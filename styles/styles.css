@@ -85,3 +85,9 @@
 .r-select{
     background: rgba(238, 130, 238, 0.43);
 }
+
+.bill-check-entry{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

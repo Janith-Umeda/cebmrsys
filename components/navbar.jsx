@@ -12,6 +12,7 @@ export default function NavBar({logoutTrigger,userName}){
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
+                        unoptimized
                     />{' '}
                     CEB Meter Reader
                 </Navbar.Brand>

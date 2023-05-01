@@ -36,6 +36,7 @@ export default function AlertToast({showAlert,setShow,type,msg}){
                         alt="a"
                         width={20}
                         height={20}
+                        unoptimized
                     />
                     <strong className="me-auto">Alert</strong>
                     <small></small>
