@@ -24,7 +24,10 @@ function EntryField({setDate,setUnits,setAccData}){
                 })
             })
         }
-        return ()=>{accNo[0] = false}
+        return ()=>{
+            accNo[0] = false;
+            // setDate(getToday());
+        }
     })
 
     function getToday(){
