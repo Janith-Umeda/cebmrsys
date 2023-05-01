@@ -45,16 +45,16 @@ function EntryField({setDate,setUnits,setAccData}){
     return(
         <Card bg="light" className="mt-4 shadow">
             <Card.Body className="row">
-                <div className="col-6" >
+                <div className="col-md-6 p-1" >
                     <input 
                         type="number" 
                         className={`form-control  ${!isValidAcc && 'anum_not_valid' }` }
                         placeholder="Account Number"
                         onBlur={(e)=>setAccNo([true,e.target.value])} 
                     />
-                    <div hidden={isValidAcc ? true : false } className="form-text text-danger">Wrong Account Number</div>
+                    <div hidden={isValidAcc ? true : false } className="form-text text-danger text-center">Wrong Account Number</div>
                 </div>
-                <div className="col-3" >
+                <div className="col-md-3 p-1" >
                     <input 
                         type="date" 
                         className="form-control"
@@ -62,7 +62,7 @@ function EntryField({setDate,setUnits,setAccData}){
                         // value={getToday()}
                     />
                 </div>
-                <div className="col-3">
+                <div className="col-md-3 p-1">
                     <input 
                         type="number" 
                         className="form-control" 

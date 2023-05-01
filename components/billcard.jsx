@@ -10,26 +10,71 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
     const [total,setTotal] = useState(0);
 
     function formatNumber(value){
-        return `Rs ${new Intl.NumberFormat().format(value)}`
+        
+        return `Rs ${new Intl.NumberFormat().format(value)}.00`
     }
+
+    // useEffect(()=>{
+    //     if(units >= 1){
+    //         const unit = Number(units);
+    //         let fc = 0;
+    //         let tot = 0;
+
+    //         if(30 >= unit){
+
+    //             fc = 500;
+    //             setFrb(unit * 20);
+    //             tot = (unit * 20) + fc;
+
+    //         }else if(30 < unit && unit <= 90){
+
+    //             fc = 1000;
+    //             setSrb(unit * 35);
+    //             tot = (unit * 35) + fc;
+
+    //         }else if(60 < unit){
+    //             let uPri = 40;
+
+    //             if(92 <= unit){
+    //                 uPri = uPri + (unit - 91);
+    //             }
+                
+    //             fc = 1500;
+    //             setTrb(unit * uPri);
+    //             tot = (unit * uPri) + fc;
+
+    //         }
+    //         setFixC(fc);
+    //         setTotal(tot);
+    //     }
+    //     return ()=>{
+    //         if(units !== 0){
+    //             setFrb(0);
+    //             setSrb(0);
+    //             setTrb(0);
+    //             setFixC(0);
+    //             setTotal(0);
+    //         }  
+    //     }
+
+    // },[units,setTotal])
 
     useEffect(()=>{
         if(units >= 1){
             const unit = Number(units);
-            let fc = 0;
-            let tot = 0;
+            let fixedC = 0;
 
             if(30 >= unit){
 
-                fc = 500;
-                setFrb(unit * 20);
-                tot = (unit * 20) + fc;
-
+                fixedC = 500;
+                setFrb((unit * 20));
+                
             }else if(30 < unit && unit <= 90){
-
-                fc = 1000;
-                setSrb(unit * 35);
-                tot = (unit * 35) + fc;
+    
+                const s = (Number(((unit-30) / 30).toString().split('.')[0]) * 30) + ((unit - 30) % 30);
+                setFrb((30 * 20)); // First Range
+                setSrb((( s * 35))); //Second Range
+                fixedC = 1500;
 
             }else if(60 < unit){
                 let uPri = 40;
@@ -38,13 +83,14 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
                     uPri = uPri + (unit - 91);
                 }
                 
-                fc = 1500;
-                setTrb(unit * uPri);
-                tot = (unit * uPri) + fc;
-
+                const s = (Number(((unit-90) / 30).toString().split('.')[0]) * 30) + ((unit - 90) % 30);
+                setFrb((30 * 20)); // First Range
+                setSrb((( 60 * 35))); //Second Range
+                setTrb((( s * uPri))); //Third Range
+                fixedC = 3000;
             }
-            setFixC(fc);
-            setTotal(tot);
+            setFixC(fixedC);
+            setTotal(frb + srb + trb + fixedC);
         }
         return ()=>{
             if(units !== 0){
@@ -56,7 +102,8 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
             }  
         }
 
-    },[units,setTotal])
+    },[units, setTotal, frb, srb, trb])
+
 
     return (
         <Card bg="light">
@@ -90,18 +137,23 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
                     <div className="col-4 border border-2 text-end">{formatNumber(total)}</div>
                 </div>
             </Card.Body>
-            <Card.Footer className="billcard-footer" hidden={(accData && rb) ? false : true} >
+            <Card.Footer className="billcard-footer" hidden={(accData) ? false : true} >
                 <div className="billcard-footer-accno">
                     <span>Account Number : </span>
                     <span>{accData?.accno}</span>
                 </div>
-                <button 
-                    className="btn btn-primary w-25" 
-                    onClick={()=>okTrigger()}
-                    disabled={units <= 0 ? true : false}
-                >
-                    {isLoading ? <Spinner size="sm"/> : 'OK'}
+                <button className="btn btn-outline-success w-25">
+                    Print
                 </button>
+                {rb ? (
+                    <button 
+                        className="btn btn-primary w-25" 
+                        onClick={()=>okTrigger()}
+                        disabled={units <= 0 ? true : false}
+                    >
+                        {isLoading ? <Spinner size="sm"/> : 'OK'}
+                    </button>
+                ) : (null)}
             </Card.Footer>
         </Card>
     )

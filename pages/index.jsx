@@ -12,11 +12,13 @@ function Entry({setAccNo,setSubmit,loading}){
         <div className="bill-check-entry">
           <input 
             type="number" 
-            className="form-control w-50"
+            className="form-control"
             placeholder='Your Account Number Here..'
-            onBlur={(e)=>setAccNo(e.target.value)}
+            onChange={(e)=>setAccNo(e.target.value)}
+            onBlur={()=>setSubmit(true)}
            />
           <button 
+            hidden
             className="btn btn-secondary"
             onClick={()=>setSubmit(true)}
           >
@@ -67,10 +69,11 @@ function PastBills({accNo,bills}){
         {isLoading ? (<Spinner size='sm' />) : ('View Past Bills')}
       </button>
     </div>
+    <div className="row g-1 m-auto">
       {
         pastBills?.map((row)=>{
           return(
-            <div className="mb-3" key={row.id}>
+            <div className="col-md-4 mb-4" key={row.id}>
               <BillCard 
                 rb={false}
                 date={row.date}
@@ -81,6 +84,7 @@ function PastBills({accNo,bills}){
           )
         })
       }
+    </div>
     </>
   )
 }
