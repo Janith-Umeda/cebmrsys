@@ -1,11 +1,12 @@
-import NavBar from '@/components/navbar'
-import { useEffect, useState } from 'react'
-import HeadwTitle from '@/components/head'
-import { Card, Spinner } from 'react-bootstrap'
-import AlertToast from '@/components/toast'
-import BillCard from '@/components/billcard'
+import NavBar from '@/components/navbar';
+import { useEffect, useState } from 'react';
+import HeadwTitle from '@/components/head';
+import { Card, Spinner } from 'react-bootstrap';
+import AlertToast from '@/components/toast';
+import BillCard from '@/components/billcard';
 
 function Entry({setAccNo,setSubmit,loading}){
+
   return (
     <Card bg='warning'>
       <Card.Body>
@@ -47,7 +48,7 @@ function PastBills({accNo,bills}){
 
     if(onClick){
       setLoading(true);
-      fetch(`http://api.cebmr/bill?accountNumber=${accNo}&limit=${bills}&offset=1`,{
+      fetch(`${process.env.API_HOST}/bill?accountNumber=${accNo}&limit=${bills}&offset=1`,{
         method:'get'
       }).then(res=>{
         res.json().then(data=>{
@@ -100,7 +101,7 @@ export default function Home() {
   useEffect(()=>{
     if(onSubmit){
       setLoading(true);
-      fetch(`http://api.cebmr/bill?accountNumber=${accNo}&limit=1&offset=0`,{
+      fetch(`${process.env.API_HOST}/bill?accountNumber=${accNo}&limit=1&offset=0`,{
         method:'get'
       }).then(res=>{
         res.json().then(data=>{

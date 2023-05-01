@@ -11,7 +11,7 @@ function EntryField({setDate,setUnits,setAccData}){
 
     useEffect(()=>{
         if(accNo[0]){
-            fetch(`http://api.cebmr/checkAccount?accno=${accNo[1]}`,{
+            fetch(`${process.env.API_HOST}/checkAccount?accno=${accNo[1]}`,{
                 method:'get'
             }).then(res=>{
                 res.json().then(data=>{
@@ -91,7 +91,7 @@ function RBoard(){
     useEffect(()=>{
         if(isSubmit){
             setLoading(true)
-            fetch('http://api.cebmr/bill',{
+            fetch(`${process.env.API_HOST}/bill`,{
                 method:'post',
                 body:new URLSearchParams({
                     accountNo:accData.accno,
@@ -118,7 +118,7 @@ function RBoard(){
     useEffect(()=>{
         const uid = sessionStorage.getItem('userId');
         if(!userData){
-            fetch(`http://api.cebmr/me/?userid=${uid}`,{
+            fetch(`${process.env.API_HOST}/me/?userid=${uid}`,{
                 'method':'get'
             }).then(res=>{
                 res.json().then(data=>{

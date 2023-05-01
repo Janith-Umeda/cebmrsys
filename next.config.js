@@ -4,6 +4,9 @@ const nextConfig = {
   output:'export',
   images:{
     unoptimized:true
+  },
+  env:{
+    API_HOST:'http://api.cebmr'
   }
 }
 

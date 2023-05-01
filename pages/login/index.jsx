@@ -41,7 +41,7 @@ function LPage(){
 
         if(isClick){
             setLoading(true);
-            fetch('http://api.cebmr/auth/',{
+            fetch(`${process.env.API_HOST}/auth/`,{
                 'method':'post',
                 'headers':{'Content-Type':'application/x-www-form-urlencoded'},
                 "body":new URLSearchParams({"email":email,"psw":psw})
