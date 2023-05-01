@@ -25,8 +25,8 @@ export default function NavBar({logoutTrigger,userName}){
                         size="sm" 
                         style={{marginLeft:"10px"}} 
                         onClick={()=>logoutTrigger()}
-                    >{userName ? <>Log Out <i class="nav-l-icon bi bi-box-arrow-left"></i></> :
-                                <><i class="nav-l-icon bi bi-box-arrow-in-right" /> Log in </> }</Button>
+                    >{userName ? <>Log Out</> :
+                                <>Log in</> }</Button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
