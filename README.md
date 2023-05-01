@@ -9,9 +9,8 @@ example :=   env:{
 
 ## DataBase Configuration.
 
-Create a DataBase called cebmr_sys
-import the sql File
+Create a DataBase called cebmr_sys and import the sql File
 
 ## API End Points
-* /auth 
-*
+* route : */auth 
+** For Authentication
