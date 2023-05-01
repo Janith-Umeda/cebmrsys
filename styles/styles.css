@@ -91,3 +91,14 @@
     align-items: center;
     justify-content: space-around;
 }
+
+.nav-log-btn{
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.nav-l-icon{
+    margin-top: 15px;
+}
