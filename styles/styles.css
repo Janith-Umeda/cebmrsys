@@ -3,6 +3,15 @@
     padding: 15px;
     border :1px solid #0d6efd;
     border-radius: 5px;
+    transition: 1s;
+}
+
+.outline-err{
+    border :1px solid #fd0d0d;
+}
+
+.outline-succ{
+    border :1px solid #2dfd0d;
 }
 
 .login-sec-top{
@@ -42,14 +51,14 @@
 
 .billcard-date{
     background: #adff2f;
-    padding: 5px;
+    padding: 7px;
     border-radius: 20px;
     transition: 0.5s;
 }
 
 
 .billcard-name{
-    padding: 5px;
+    padding: 7px;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -60,7 +69,7 @@
 .billcard-footer{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .billcard-footer-accno{
@@ -69,7 +78,7 @@
     justify-content: space-around;
     border: 1px solid #0d6efd;
     border-radius: 10px;
-    padding: 5px;
+    padding: 3.5px;
     transition: 0.5s;
 }
 
@@ -101,4 +110,23 @@
 
 .nav-l-icon{
     margin-top: 15px;
+}
+
+@media only screen and (max-width:425px){
+    .billcard-footer-accno{
+        width: 100%;
+    }
+    
+    .billcard-footer-accno>span{
+        padding-left: 5px;
+    }
+
+    .billcard-footer{
+        flex-direction: column;
+    }
+
+    .billcard-footer>button{
+        width: 100% !important;
+        margin-top: 10px;
+    }
 }

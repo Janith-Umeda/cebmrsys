@@ -1,18 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card, Spinner } from "react-bootstrap";
 
 export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
 
+    const ref = useRef();
     const [fixC,setFixC] = useState(0);
     const [frb,setFrb] = useState(0);
     const [srb,setSrb] = useState(0);
     const [trb,setTrb] = useState(0);
     const [total,setTotal] = useState(0);
+    const [printClick,setPrintC] = useState(false);
 
     function formatNumber(value){
         
         return `Rs ${new Intl.NumberFormat().format(value)}.00`
     }
+
+    useEffect(()=>{
+        if(printClick){
+
+            const priF = document.getElementById('printFrame').contentWindow;
+            priF.document.head.innerHTML = `<style>${document.getElementsByTagName('style')[1].innerHTML}</style>
+                                            <style>${document.getElementsByTagName('style')[3].innerHTML}</style>
+                                            <style>.ph{display:none}</style>`;
+            // priF.document.open();
+            priF.document.body.innerHTML = `<div style="position-absolute top-50 start-50 translate-middle">${ref.current.innerHTML}</div>`;
+            // priF.document.close();
+            priF.focus();
+            priF.print();
+        }
+
+        return ()=>setPrintC(false);
+    })
+
 
     // useEffect(()=>{
     //     if(units >= 1){
@@ -106,6 +126,7 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
 
 
     return (
+        <div ref={ref}>
         <Card bg="light">
             <Card.Header className="billcard-head">
                 <h6 title="Account Owner's Name" className="billcard-name">{accData?.cname}</h6>
@@ -142,12 +163,12 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
                     <span>Account Number : </span>
                     <span>{accData?.accno}</span>
                 </div>
-                <button className="btn btn-outline-success w-25">
+                <button className="btn btn-sm btn-outline-success w-25 ph" onClick={()=>setPrintC(true)}>
                     Print
                 </button>
                 {rb ? (
                     <button 
-                        className="btn btn-primary w-25" 
+                        className="btn btn-sm btn-primary w-25 ph" 
                         onClick={()=>okTrigger()}
                         disabled={units <= 0 ? true : false}
                     >
@@ -156,5 +177,6 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
                 ) : (null)}
             </Card.Footer>
         </Card>
+        </div>
     )
 }

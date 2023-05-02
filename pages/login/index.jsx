@@ -34,7 +34,7 @@ function LPage(){
     const [psw,setPsw] = useState('');
     const [isClick,setClick] = useState(false);
     const [isLoading,setLoading] = useState(false);
-    const [data,setData] = useState();
+    const [data,setData] = useState(null);
     const [showAlert,setAlert] = useState(false);
 
     useEffect(()=>{
@@ -74,8 +74,8 @@ function LPage(){
         <>
         <main>
             <NavBar />
-            <div className="form-signin w-100 shadow position-absolute top-50 start-50 translate-middle">
-                <Form validated>
+            <div className={`form-signin ${data &&( !data?.status ? 'outline-err' : 'outline-succ') } w-100 shadow position-absolute top-50 start-50 translate-middle`}>
+                <Form>
                     <div className="login-sec-top">
                         <Image
                             className="img-fluid mb-3"
@@ -86,10 +86,12 @@ function LPage(){
                             unoptimized={true}
                         />
                         <h2 className="h3 mb-3 fw-normal">Please Sign in</h2>
+                        <small className={`${!data?.status ? 'text-danger' : 'text-success' } mb-1`} >{data?.msg}</small>
                     </div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control 
+                            className={ data && (!data?.status ? 'outline-err' : 'outline-succ') }
                             type="email" 
                             placeholder="example@gmail.com" 
                             required
@@ -100,6 +102,7 @@ function LPage(){
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control 
+                            className={ data && (!data?.status ? 'outline-err' : 'outline-succ') }
                             type="password" 
                             placeholder="******" 
                             required

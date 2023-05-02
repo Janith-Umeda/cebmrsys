@@ -7,6 +7,10 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <iframe 
+          id="printFrame" 
+          style={{height: '0px', width: '0px', position: 'absolute'}}
+        ></iframe>
       </body>
     </Html>
   )

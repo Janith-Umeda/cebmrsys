@@ -67,7 +67,7 @@ function PastBills({accNo,bills}){
     <>
     <div className='mt-3 mb-3 d-flex justify-content-center'>
       <button className="btn shadow btn-info rounded-5 w-50" onClick={()=>setClick(true)}>
-        {isLoading ? (<Spinner size='sm' />) : ('View Past Bills')}
+        {isLoading ? (<Spinner size='sm' />) : ( <><i className="bi bi-clock-history me-2"></i>View Past Bills</>)}
       </button>
     </div>
     <div className="row g-1 m-auto">
