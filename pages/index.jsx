@@ -48,12 +48,13 @@ function PastBills({accNo,bills}){
 
     if(onClick){
       setLoading(true);
-      fetch(`${process.env.API_HOST}/bill?accountNumber=${accNo}&limit=${bills}&offset=1`,{
+      fetch(`${process.env.API_HOST}/api/bill/${accNo}?limit=${bills}&offset=1`,{
         method:'get'
       }).then(res=>{
         res.json().then(data=>{
           setLoading(false);
-          setPBills(data.bill_Data);
+          setPBills(data.bill_data);
+          console.log(data);
         })
       }).catch(err=>{
         setLoading(false);
@@ -79,7 +80,7 @@ function PastBills({accNo,bills}){
                 rb={false}
                 date={row.date}
                 units={row.units}
-                accData={{accno:row.accno,cname:row.cname}}
+                accData={{accno:row.account_number,cname:row.customer_name}}
               />
             </div>
           )
@@ -101,7 +102,7 @@ export default function Home() {
   useEffect(()=>{
     if(onSubmit){
       setLoading(true);
-      fetch(`${process.env.API_HOST}/bill?accountNumber=${accNo}&limit=1&offset=0`,{
+      fetch(`${process.env.API_HOST}/api/bill/${accNo}?&limit=1&offset=0`,{
         method:'get'
       }).then(res=>{
         res.json().then(data=>{
@@ -142,13 +143,13 @@ export default function Home() {
               resData?.bills > 0 ? (
                 <>
                 <BillCard 
-                  key={resData?.bill_Data[0].id}
+                  key={resData?.bill_data[0].id}
                   rb={false}
-                  date={resData?.bill_Data[0].date}
-                  units={resData?.bill_Data[0].units}
-                  accData={{accno:resData?.bill_Data[0].accno,cname:resData?.bill_Data[0].cname}}
+                  date={resData?.bill_data[0].date}
+                  units={resData?.bill_data[0].units}
+                  accData={{accno:resData?.bill_data[0].account_number,cname:resData?.bill_data[0].customer_name}}
                 />
-                <PastBills accNo={resData?.bill_Data[0].accno} bills={resData?.bills}/>
+                <PastBills accNo={resData?.bill_data[0].account_number} bills={resData?.total_bills}/>
                 </>
               ) : (
                 <Card className='shadow' bg='info' hidden={resData?.msg === "Invalid Account Number" ? true : false}>
