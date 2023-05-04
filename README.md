@@ -32,23 +32,39 @@ Create a DataBase called cebmr_sys and import the sql File.
 &emsp; You can Save your bill as a PDF using pressing print Button.<br> 
 
 ## API End Points
-* route : */auth<br>
-&emsp;&emsp;For Authentication<br>
+* route : */api/login<br>
 &emsp;&emsp;Methods : POST<br>
-&emsp;&emsp;Parameters : email / psw<br>
+&emsp;&emsp;For Authentication<br>
+&emsp;&emsp;Parameters : email / password<br>
 
-* route : */me<br>
-&emsp;&emsp;For get a Reader's Account Information.<br>
-&emsp;&emsp;Methods : GET<br> 
-&emsp;&emsp;Parameters : userid<br>
+* route : */api/register<br>
+&emsp;&emsp;Methods : POST<br>
+&emsp;&emsp;For Register an user<br>
+&emsp;&emsp;Parameters : email / name /password<br>
 
-* route : */checkAccount<br>
-&emsp;&emsp;For check a Customer Account.<br>
+* route : */api/me<br>
 &emsp;&emsp;Methods : GET<br>
-&emsp;&emsp;Parameters : accno<br>
+&emsp;&emsp;For get a Reader's Account Information.<br>
+&emsp;&emsp;Headers : Authorization: bearer ACCESS_TOKEN<br>
 
-* route : */bill<br>
-&emsp;&emsp;For Read and Create Bills<br>
-&emsp;&emsp;Methods : GET / POST<br>
-&emsp;&emsp;GET Parameters : accountNumber / limit / offset<br>
-&emsp;&emsp;POST Parameters : accountNo / uid / units / date<br>
+* route : */api/customer<br>
+&emsp;&emsp;Methods : POST<br>
+&emsp;&emsp;For Register a new Customer Account.<br>
+&emsp;&emsp;Parameters : customer_name / account_number<br>
+&emsp;&emsp;Headers : Authorization: bearer ACCESS_TOKEN<br>
+
+* route : */api/customer/check/{ACCOUNT_NUMBER}<br>
+&emsp;&emsp;Methods : GET<br>
+&emsp;&emsp;For Register a new Customer Account.<br>
+&emsp;&emsp;Headers : Authorization: bearer ACCESS_TOKEN<br>
+
+* route : */api/bill<br>
+&emsp;&emsp;Methods : POST<br>
+&emsp;&emsp;For Save a new Bill.<br>
+&emsp;&emsp;Parameters : account_number / date / id / units<br>
+&emsp;&emsp;Headers : -H Authorization: bearer ACCESS_TOKEN<br>
+
+* route : */api/bill/{ACCOUNT_NUMBER}<br>
+&emsp;&emsp;Methods : GET<br>
+&emsp;&emsp;For Get the Bills.<br>
+&emsp;&emsp;Parameters : offset / limit<br>
