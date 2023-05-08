@@ -8,15 +8,21 @@ import { Card } from "react-bootstrap";
 function EntryField({setDate,setUnits,setAccData}){
     const [accNo,setAccNo] = useState([false,0]);
     const [isValidAcc,setValidAcc] = useState(true);
+    const [resp,setResp] = useState(null);
 
     useEffect(()=>{
         if(accNo[0]){
-            fetch(`${process.env.API_HOST}/checkAccount?accno=${accNo[1]}`,{
-                method:'get'
+            fetch(`${process.env.API_HOST}/api/customer/check/${accNo[1]}`,{
+                method:'get',
+                'headers':{
+                    'Authorization':`Bearer ${sessionStorage.getItem('token')}`,
+                    "X-Requested-With":'XMLHttpRequest'
+                }
             }).then(res=>{
                 res.json().then(data=>{
+                    setResp(data);
                     if(data.status){
-                        setAccData(data.accData);
+                        setAccData(data.customer_data);
                         setValidAcc(true);
                     }else{
                         setValidAcc(false);
@@ -52,7 +58,13 @@ function EntryField({setDate,setUnits,setAccData}){
                         placeholder="Account Number"
                         onBlur={(e)=>setAccNo([true,e.target.value])} 
                     />
-                    <div hidden={isValidAcc ? true : false } className="form-text text-danger text-center">Wrong Account Number</div>
+                    <div 
+                        hidden={isValidAcc ? true : false } 
+                        className="form-text text-danger text-center"
+                    >
+                        {(resp?.err?.account_number && !isValidAcc) && resp?.err?.account_number[0]}
+                        {(resp?.msg && !isValidAcc) && resp?.msg}
+                    </div>
                 </div>
                 <div className="col-md-3 p-1" >
                     <input 
@@ -91,14 +103,18 @@ function RBoard(){
     useEffect(()=>{
         if(isSubmit){
             setLoading(true)
-            fetch(`${process.env.API_HOST}/bill`,{
+            fetch(`${process.env.API_HOST}/api/bill`,{
                 method:'post',
                 body:new URLSearchParams({
-                    accountNo:accData.accno,
-                    uid:userData.data.id,
+                    "account_number":accData.account_number,
+                    id:userData.id,
                     units:units,
                     date:date
-                })
+                }),
+                'headers':{
+                    'Authorization':`Bearer ${sessionStorage.getItem('token')}`,
+                    "X-Requested-With":'XMLHttpRequest'
+                }
             }).then(res=>{
                 res.json().then(data=>{
                     setAlert(true)
@@ -112,27 +128,37 @@ function RBoard(){
             })
         }
         return ()=>setIsSubmit(false);
-    },[accData?.accno, date, isSubmit, units, userData?.data.id])
+    },[accData?.account_number, date, isSubmit, units, userData?.id])
 
     // fetch current logged user's data
     useEffect(()=>{
-        const uid = sessionStorage.getItem('userId');
+
         if(!userData){
-            fetch(`${process.env.API_HOST}/me/?userid=${uid}`,{
-                'method':'get'
+            fetch(`${process.env.API_HOST}/api/me`,{
+                'method':'get',
+                'headers':{
+                    'Authorization':`Bearer ${sessionStorage.getItem('token')}`,
+                    "X-Requested-With":'XMLHttpRequest'
+                }
             }).then(res=>{
                 res.json().then(data=>{
+                    if(data.message == 'Unauthenticated'){
+                        window.location.replace('/login')
+                        sessionStorage.removeItem('token')
+                    }
                     setUserData(data);
                     console.log(data);
                 })  
-            }).catch(err=>{})
+            }).catch(err=>{
+                console.log(err)
+            })
         }
         return
     })
 
     useEffect(()=>{
         if(isLogout){
-            sessionStorage.removeItem('userId');
+            sessionStorage.removeItem('token');
             window.location.replace('./login');
         }
         return ()=>setLogout(false);
@@ -141,18 +167,25 @@ function RBoard(){
 
     return (
         <>
-        <NavBar logoutTrigger={()=>setLogout(true)} userName={userData?.data.username} />
+        <NavBar logoutTrigger={()=>setLogout(true)} userName={userData?.name} />
         <main className="container">
             <EntryField setDate={setDate} setUnits={setUnits} setAccData={setAccData}/>
             <div className="mt-4 shadow">
-                <BillCard rb={true} isLoading={isLoading} date={date} units={units} accData={accData} okTrigger={()=>setIsSubmit(true)}/>
+                <BillCard 
+                    rb={true} 
+                    isLoading={isLoading} 
+                    date={date} 
+                    units={units} 
+                    accData={{cname:accData?.customer_name,accno:accData?.account_number}} 
+                    okTrigger={()=>setIsSubmit(true)}
+                />
             </div>
         </main>
         <AlertToast 
             showAlert={alert}
             setShow={setAlert}
             type={resData?.status ? ('success') : ('error')}
-            msg={resData?.msg}
+            msg={resData?.message ? (resData?.message) : (resData?.err?.date)}
         />
         </>
     )
@@ -163,7 +196,7 @@ export default function ReaderBoard(){
     const [isLogged,setLogged] = useState(false);
     
     useEffect(()=>{
-        if(!sessionStorage.getItem('userId')){
+        if(!sessionStorage.getItem('token')){
             window.location.replace('/login');
         }else{
             setLogged(true);

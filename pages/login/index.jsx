@@ -11,7 +11,7 @@ export default function Login(){
     const [isLogged,setLogged] = useState(false);
     
     useEffect(()=>{
-        if(sessionStorage.getItem('userId')){
+        if(sessionStorage.getItem('token')){
             setLogged(true);
             window.location.replace('/readerboard');
         }else{
@@ -41,19 +41,22 @@ function LPage(){
 
         if(isClick){
             setLoading(true);
-            fetch(`${process.env.API_HOST}/auth/`,{
+            fetch(`${process.env.API_HOST}/api/login/`,{
                 'method':'post',
-                'headers':{'Content-Type':'application/x-www-form-urlencoded'},
-                "body":new URLSearchParams({"email":email,"psw":psw})
+                "headers":{
+                    "X-Requested-With":"XMLHttpRequest",
+                    'Content-Type':'application/x-www-form-urlencoded'
+                },
+                "body":new URLSearchParams({email:email,password:psw})
             }).then(response=>{
                 response.json().then(data=>{
                     setLoading(false);
                     setData(data);
                     setAlert(true);
-                    if(data?.userID && data?.status){
+                    if(data?.token && data?.status){
                         // const cookie = new ReadyCookies();
                         // cookie.setSession("userID",data.userID);
-                        sessionStorage.setItem('userId',data.userID);
+                        sessionStorage.setItem('token',data.token.token);
                         window.location.replace('/readerboard');
                     }
                 })
@@ -86,7 +89,7 @@ function LPage(){
                             unoptimized={true}
                         />
                         <h2 className="h3 mb-3 fw-normal">Please Sign in</h2>
-                        <small className={`${!data?.status ? 'text-danger' : 'text-success' } mb-1`} >{data?.msg}</small>
+                        <small className={`${!data?.status ? 'text-danger' : 'text-success' } mb-1`} >{data?.message}</small>
                     </div>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
@@ -97,6 +100,7 @@ function LPage(){
                             required
                             onChange={(e)=>{setEmail(e.target.value)}}
                         />
+                        <small className={`${data?.errors?.email ? 'text-danger' : 'text-success' } mb-1`} >{data?.errors?.email && data?.errors?.email[0]}</small>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -108,6 +112,7 @@ function LPage(){
                             required
                             onChange={(e)=>{setPsw(e.target.value)}}
                         />
+                        <small className={`${data?.errors?.password ? 'text-danger' : 'text-success' } mb-1`} >{data?.errors?.password && data?.errors?.password[0]}</small>
                     </Form.Group>
                     <Button className="w-100" variant="primary" type="button" onClick={()=>setClick(true)}>
                         {isLoading ? (<Spinner size="sm"/>) : ('Login')}
@@ -119,7 +124,7 @@ function LPage(){
             showAlert={showAlert}
             setShow={setAlert}
             type={data?.status ? ('success') : ('error')} 
-            msg={data?.msg} 
+            msg={data?.message} 
         />
         </>
     );

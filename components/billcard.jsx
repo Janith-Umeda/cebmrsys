@@ -33,52 +33,6 @@ export default function BillCard({rb,date,units,accData,okTrigger,isLoading}){
         return ()=>setPrintC(false);
     })
 
-
-    // useEffect(()=>{
-    //     if(units >= 1){
-    //         const unit = Number(units);
-    //         let fc = 0;
-    //         let tot = 0;
-
-    //         if(30 >= unit){
-
-    //             fc = 500;
-    //             setFrb(unit * 20);
-    //             tot = (unit * 20) + fc;
-
-    //         }else if(30 < unit && unit <= 90){
-
-    //             fc = 1000;
-    //             setSrb(unit * 35);
-    //             tot = (unit * 35) + fc;
-
-    //         }else if(60 < unit){
-    //             let uPri = 40;
-
-    //             if(92 <= unit){
-    //                 uPri = uPri + (unit - 91);
-    //             }
-                
-    //             fc = 1500;
-    //             setTrb(unit * uPri);
-    //             tot = (unit * uPri) + fc;
-
-    //         }
-    //         setFixC(fc);
-    //         setTotal(tot);
-    //     }
-    //     return ()=>{
-    //         if(units !== 0){
-    //             setFrb(0);
-    //             setSrb(0);
-    //             setTrb(0);
-    //             setFixC(0);
-    //             setTotal(0);
-    //         }  
-    //     }
-
-    // },[units,setTotal])
-
     useEffect(()=>{
         if(units >= 1){
             const unit = Number(units);

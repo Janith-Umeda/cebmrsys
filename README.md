@@ -55,7 +55,7 @@ Create a DataBase called cebmr_sys and import the sql File.
 
 * route : */api/customer/check/{ACCOUNT_NUMBER}<br>
 &emsp;&emsp;Methods : GET<br>
-&emsp;&emsp;For Register a new Customer Account.<br>
+&emsp;&emsp;For Check a Customer Account.<br>
 &emsp;&emsp;Headers : Authorization: bearer ACCESS_TOKEN<br>
 
 * route : */api/bill<br>
