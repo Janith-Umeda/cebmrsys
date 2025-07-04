@@ -6,7 +6,7 @@ const nextConfig = {
     unoptimized:true
   },
   env:{
-    API_HOST:'http://127.0.0.1:8000'
+    API_HOST:'http://127.0.0.1:8001'
   }
 }
 

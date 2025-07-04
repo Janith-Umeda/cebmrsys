@@ -17,7 +17,7 @@ function Entry({setAccNo,setSubmit,loading}){
             placeholder='Your Account Number Here..'
             onChange={(e)=>setAccNo(e.target.value)}
             onBlur={()=>setSubmit(true)}
-           />
+          />
           <button 
             hidden
             className="btn btn-secondary"
